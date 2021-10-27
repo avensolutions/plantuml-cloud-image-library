@@ -2,6 +2,7 @@
 
 !define PUMLLibrary https://raw.githubusercontent.com/avensolutions/plantuml-cloud-image-library/main
 !includeurl PUMLLibrary/general/general.puml
+!includeurl PUMLLibrary/gitlab/gitlab.puml
 
 skinparam rectangle<<boundary>> {
     Shadowing false
@@ -17,5 +18,7 @@ rectangle "AWS" <<boundary>> {
     $Users(users, Users, Users)
     $Email(email, Email, Email)
 }
+
+$GitLab(gitlab, GitLab, GitLab)
 
 @enduml
