@@ -1,8 +1,6 @@
 @startuml
 
-!define PUMLLibrary https://raw.githubusercontent.com/avensolutions/plantuml-cloud-image-library/main
-!includeurl PUMLLibrary/general/general.puml
-!includeurl PUMLLibrary/gitlab/gitlab.puml
+skinparam defaultTextAlignment center
 
 skinparam rectangle<<boundary>> {
     Shadowing false
@@ -12,13 +10,45 @@ skinparam rectangle<<boundary>> {
     BorderStyle dashed
 }
 
+!$imgroot = "https://github.com/avensolutions/plantuml-cloud-image-library/raw/main/images"
+
+title Sample Architecture Diagram
+
+!unquoted procedure $Data($alias, $label, $techn, $descr="", $stereo="Data")
+    rectangle "==$label\n\n<img:$imgroot/general/documents.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+!unquoted procedure $AwsS3($alias, $label, $techn, $descr="", $stereo="AWS S3")
+    rectangle "==$label\n\n<img:$imgroot/aws/Storage/S3.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+!unquoted procedure $AwsGlue($alias, $label, $techn, $descr="", $stereo="AWS Glue")
+    rectangle "==$label\n\n<img:$imgroot/aws/Analytics/Glue.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+!unquoted procedure $Snowpipe($alias, $label, $techn, $descr="", $stereo="Snowpipe")
+    rectangle "==$label\n\n<img:$imgroot/snowflake/snowpipe.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+!unquoted procedure $SnowflakeDB($alias, $label, $techn, $descr="", $stereo="Snowflake DB")
+    rectangle "==$label\n\n<img:$imgroot/snowflake/snowflakeDB.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+$Data(data, Incoming Data, CSV Files)
+
 rectangle "AWS" <<boundary>> {
-    $Documents(documents, Documents, Documents)
-    $User(user, User, User)
-    $Users(users, Users, Users)
-    $Email(email, Email, Email)
+    $AwsS3(landing, Landing Zone, S3 Bucket)   
+    $AwsGlue(gluejob, ETL Job, Glue Job)
+    $AwsS3(staging, Staging Zone, S3 Bucket) 
 }
 
-$GitLab(gitlab, GitLab, GitLab)
+$Snowpipe(snowpipe, Snowpipe, Snowpipe)
+$SnowflakeDB(db, Datamart, Snowflake DB)
+
+data -RIGHT-> landing
+landing -RIGHT-> gluejob
+gluejob -RIGHT-> staging
+staging -RIGHT-> snowpipe
+snowpipe -RIGHT-> db: ingestion into Snowflake
 
 @enduml
