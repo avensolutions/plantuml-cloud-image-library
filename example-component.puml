@@ -49,6 +49,6 @@ data -RIGHT-> landing
 landing -RIGHT-> gluejob
 gluejob -RIGHT-> staging
 staging -RIGHT-> snowpipe
-snowpipe -RIGHT-> db: ingestion into Snowflake
+snowpipe -RIGHT-> db: auto ingest
 
 @enduml
