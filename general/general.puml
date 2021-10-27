@@ -1,15 +1,28 @@
 @startuml
 
+!$githubroot = "https://github.com/avensolutions/plantuml-cloud-image-library/raw/main"
+skinparam defaultTextAlignment center
+
 '
 ' General PlantUML Resource Library
 '
 
-skinparam defaultTextAlignment center
-
-!$urlroot = "https://github.com/infraql/plantuml-cloud-resource-library/raw/main/general/images"
+!$imagesroot = %string($githubroot + "/general")
 
 !unquoted procedure $User($alias, $label, $techn, $descr="", $stereo="User")
-    rectangle "==$label\n\n<img:$urlroot/Res_User_48_Light.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+    rectangle "==$label\n\n<img:$imagesroot/images/user.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+!unquoted procedure $Users($alias, $label, $techn, $descr="", $stereo="Users")
+    rectangle "==$label\n\n<img:$imagesroot/images/users.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+!unquoted procedure $Documents($alias, $label, $techn, $descr="", $stereo="Documents")
+    rectangle "==$label\n\n<img:$imagesroot/images/documents.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
+!endprocedure
+
+!unquoted procedure $Email($alias, $label, $techn, $descr="", $stereo="Email")
+    rectangle "==$label\n\n<img:$imagesroot/images/email.png>\n//<size:12>[$techn]</size>//" <<$stereo>> as $alias #white
 !endprocedure
 
 @enduml

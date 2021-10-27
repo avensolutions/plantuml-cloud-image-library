@@ -1,9 +1,7 @@
 @startuml
 
-!define Library https://raw.githubusercontent.com/infraql/plantuml-cloud-resource-library/main
-!includeurl Library/aws/aws.puml
-!includeurl Library/general/general.puml
-
+!define PUMLLibrary https://raw.githubusercontent.com/avensolutions/plantuml-cloud-image-library/main
+!includeurl PUMLLibrary/general/general.puml
 
 skinparam rectangle<<boundary>> {
     Shadowing false
@@ -13,41 +11,11 @@ skinparam rectangle<<boundary>> {
     BorderStyle dashed
 }
 
-$DataSupplier(supplier, Data Supplier, WSP or Sporting Body)
-
 rectangle "AWS" <<boundary>> {
-    $AwsTransferFamily(sftpgw, SFTP/FTPS Gateway, AWS Transfer Family)
-    $AwsS3(s3landing, Landing Bucket, AWS S3 Bucket)
-    $AwsLambda(lambda, S3 Object Notification, AWS Lambda Function)
-    $AwsGlue(gluejobs, Glue ETL Jobs, AWS Glue)
-    $AwsGlue(gluecatalog, Glue Catalog, AWS Glue)
-    $AwsS3(s3staging, Staging Bucket, AWS S3 Bucket)
-    $AwsSns(sns, SMS/Email/Push Notifications, AWS SNS)
+    $Documents(documents, Documents, Documents)
+    $User(user, User, User)
+    $Users(users, Users, Users)
+    $Email(email, Email, Email)
 }
-
-rectangle "Snowflake (AWS)" <<boundary>> {
-    $Snowpipe(snowpipe, Snowpipe, Snowpipe)
-    $SnowflakeDb(db, Snowflake DB, Snowflake DB)
-}
-
-$Netlify(netlify, Netlify, Netlify CDN)
-
-$User(user, User, Sporting Body User)
-
-supplier -RIGHT-> sftpgw : FTPS or SFTP
-snowpipe -[hidden]D- db
-s3landing -RIGHT-> gluejobs : uses
-sftpgw -RIGHT-> s3landing : writes to
-s3landing -DOWN-> lambda : notifies
-lambda -UP-> gluejobs : triggers
-lambda -[hidden]R- gluecatalog
-gluecatalog -UP-> gluejobs : provides metadata
-gluejobs -RIGHT-> s3staging : writes to
-gluejobs -DOWN-> sns : triggers
-s3staging -RIGHT-> snowpipe : triggers
-snowpipe -DOWN-> db : populates
-user -UP-> db : accesses
-sns -DOWN-> user : alerts
-netlify -RIGHT-> user : serves portal
 
 @enduml
