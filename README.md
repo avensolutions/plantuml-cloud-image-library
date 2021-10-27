@@ -33,3 +33,5 @@ Full examples are provided below:
 ## Component Diagram
 
 the code in [example-component.puml](example-component.puml) generates ...  
+
+[![Example PlantUML Diagram](example-component.png)](example-component.png)
